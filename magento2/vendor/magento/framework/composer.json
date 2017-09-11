@@ -1,0 +1,38 @@
+{
+    "name": "magento/framework",
+    "description": "N/A",
+    "type": "magento2-library",
+    "version": "100.1.6",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+        "php": "~5.6.5|7.0.2|7.0.4|~7.0.6",
+        "ext-spl": "*",
+        "ext-dom": "*",
+        "ext-simplexml": "*",
+        "ext-mcrypt": "*",
+        "ext-hash": "*",
+        "ext-curl": "*",
+        "ext-iconv": "*",
+        "ext-gd": "*",
+        "ext-openssl": "*",
+        "lib-libxml": "*",
+        "ext-xsl": "*",
+        "symfony/process": "~2.1",
+        "zendframework/zend-stdlib": "~2.4.6",
+        "zendframework/zend-http": "~2.4.6"
+    },
+    "suggest": {
+        "ext-imagick": "Use Image Magick >=3.0.0 as an optional alternative image processing library"
+    },
+    "autoload": {
+        "psr-4": {
+            "Magento\\Framework\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

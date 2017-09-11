@@ -1,0 +1,20 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * System configuration comment model interface
+ */
+namespace Magento\Config\Model\Config;
+
+interface CommentInterface
+{
+    /**
+     * Retrieve element comment by element value
+     * @param string $elementValue
+     * @return string
+     */
+    public function getCommentText($elementValue);
+}

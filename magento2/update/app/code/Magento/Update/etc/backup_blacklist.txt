@@ -1,0 +1,10 @@
+# The list contains the paths relative to the directory that is archived
+var
+pub/static
+update
+pub/media
+.git
+.svn
+node_modules
+.grunt
+.idea

@@ -1,0 +1,23 @@
+server {
+   listen 80 default_server;
+  add_header 'Access-Control-Allow-Origin' '*';
+    server_name 192.168.5.137;                              
+    return 302 https://$server_name$request_uri;    
+    }
+
+server {
+ listen 443;
+  add_header 'Access-Control-Allow-Origin' '*';
+ server_name 192.168.5.137;
+        ssl on;
+        ssl_certificate /etc/nginx/cert.crt;
+        ssl_certificate_key /etc/nginx/cert.key;
+        ssl_session_timeout 5m;
+        ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers "HIGH:!aNULL:!MD5 or HIGH:!aNULL:!MD5:!3DES";
+        ssl_prefer_server_ciphers on;
+ location / {
+    include /etc/nginx/proxy_params;
+    proxy_pass http://varnish:6081;
+}
+}

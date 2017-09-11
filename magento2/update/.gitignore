@@ -1,0 +1,11 @@
+/var/*
+!/var/.htaccess
+/vendor
+/.buildpath
+/.cache
+/.metadata
+/.project
+/.settings
+atlassian*
+/.idea
+/.gitattributes

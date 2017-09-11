@@ -1,0 +1,21 @@
+<?php
+/**
+ *
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+namespace Magento\Backend\Controller\Adminhtml\System\Store;
+
+class Index extends \Magento\Backend\Controller\Adminhtml\System\Store
+{
+    /**
+     * @return \Magento\Backend\Model\View\Result\Page
+     */
+    public function execute()
+    {
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->getConfig()->getTitle()->prepend(__('Stores'));
+
+        return $resultPage;
+    }
+}

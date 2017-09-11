@@ -1,0 +1,142 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/** @var string $statusMessage */
+/** @var bool $isUpdateInProgress */
+/** @var bool $pending */
+/** @var string $headerTitle */
+/** @var array $titles */
+?>
+<!doctype html>
+<html ng-app="status">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="description" content="Magento update status page"/>
+    <title>Magento Updater</title>
+    <link rel="stylesheet" type="text/css" href="pub/css/setup.css"/>
+    <link rel="shortcut icon" type="image/x-icon" href="pub/favicon.ico"/>
+    <script type="text/javascript" src="pub/js/lib/jquery.js"></script>
+    <script type="text/javascript" src="pub/js/lib/angular/angular.js"></script>
+    <script type="text/javascript" src="pub/js/lib/angular-ng-storage/angular-ng-storage.min.js"></script>
+    <script type="text/javascript" src="pub/js/status.js"></script>
+</head>
+<body>
+<div style="display: inline-block" class="ng-scope">
+    <div class="menu-wrapper ng-scope">
+        <nav class="admin__menu ng-scope" role="navigation">
+            <span class="logo logo-static" data-edition="Community Edition">
+                <img class="logo-img" src="pub/images/logo.svg" alt="Magento Admin Panel">
+            </span>
+            <ul id="nav" role="menubar">
+                <li class="item-home level-0">
+                    <a>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="item-extension level-0 <?php echo preg_match('/^(Uninstall|Update|New).*$/i', $headerTitle) ? '_active' : '' ?>">
+                    <a>
+                        <span>Extension Manager</span>
+                    </a>
+                </li>
+                <li class="item-component level-0 <?php echo preg_match('/^(Disable|Enable).*$/', $headerTitle) ? '_active' : '' ?>" >
+                    <a>
+                        <span>Module Manager</span>
+                    </a>
+                </li>
+                <li class="item-upgrade level-0 <?php echo $headerTitle === 'System Upgrade' ? '_active' : '' ?>">
+                    <a>
+                        <span>System Upgrade</span>
+                    </a>
+                </li>
+                <li class="item-system-config level-0">
+                    <a>
+                        <span>System Config</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="page-wrapper">
+    <div class="ng-scope">
+        <header class="page-header row ng-scope">
+            <div class="page-header-hgroup col-l-8 col-m-6">
+                <div class="page-title-wrapper">
+                    <h1 class="page-title"><?php echo $headerTitle; ?></h1>
+                </div>
+            </div>
+        </header>
+    </div>
+    <main id="anchor-content" class="page-content">
+        <div class="ng-scope">
+            <nav
+                id="menu"
+                class="nav ng-scope show"
+                >
+
+                <ul class="nav-bar">
+                    <?php
+                    $size = count($titles);
+                    $i = 1;
+                    foreach ($titles as $title) {
+                        if ($i == $size) {
+                            echo '<li class="active disabled"><a>' . $title . '</a></li>';
+                        } else {
+                            echo "<li><a>$title</a></li>";
+                        }
+                        $i++;
+                    }
+                    ?>
+                </ul>
+            </nav>
+        </div>
+        <div id="main" class="main">
+            <div ui-view="root" class="ng-scope">
+                <div ui-view class="ng-scope">
+                    <div ng-controller="statusController">
+                        <h3><?php echo $headerTitle . ' Status:' ;?></h3>
+                        <div id="status">
+                            <?php echo $isUpdateInProgress ? "Update application is running" : ($pending ? "Update pending" : "Update application is not running") ?>
+                        </div>
+                        <br/>
+                        <div class="message message-error" ng-show="error">
+                            <p>
+                                Error in Update!
+                                <br/>
+                                Please refer to documentation <a href="http://devdocs.magento.com/guides/v2.0/install-gde/install/cli/install-cli-backup.html" target="_blank">Doc link</a> to perform manual rollback.
+                            </p>
+                            <p>
+                                To attempt automatic rollback, please click the "Rollback" button.
+                            </p>
+                            <button type="button" ng-disabled="rollbackStarted" ng-click="rollback()">
+                                Rollback
+                            </button>
+                        </div>
+                        <br/>
+                        <div>
+                            <button type="button" ng-click="toggleConsole()">
+                                Console Log
+                            </button>
+                        </div>
+                        <br/>
+                        <div ng-show="isConsole">
+                            <div id="console" class="console"><?php echo $statusMessage ?></div>
+                        </div>
+                        <div ng-show="nextButton">
+                            Rollback has been performed. Please check console log for more detail.
+                            <button type="button" ng-click="goToSuccessPage()">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        </div>
+    </main>
+</div>
+</body>
+</html>

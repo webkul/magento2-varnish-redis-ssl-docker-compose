@@ -1,0 +1,81 @@
+version: '3'
+services:
+  ssl_server:
+   build:
+     context: ./ssl_server/
+   container_name: nginx
+   depends_on:
+     - web_server
+     - cache_server
+     - database_server
+     - redis_server
+   volumes:
+     - ./ssl_server/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+     - ./ssl_server/default:/etc/nginx/sites-enabled/default
+     - ./ssl_server/nginx.conf:/etc/nginx/nginx.conf
+   links:
+     - web_server
+     - cache_server
+     - database_server
+     - redis_server
+   ports: 
+     - "80:80"
+     - "443:443"
+       
+  redis_server:
+    build:
+      context: ./redis_server/
+    container_name: redis
+    depends_on:
+      - web_server
+      - cache_server
+      - database_server
+    volumes:
+      - ./redis_server/redis.conf:/etc/redis/redis.conf
+      - ./redis_server/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+    links:
+      - web_server
+    ports:
+      - "6379:6379"
+
+  cache_server:
+    build:
+      context: ./cache_server/
+    container_name: varnish
+    depends_on:
+      - web_server
+    volumes:
+      - ./cache_server/default.vcl:/etc/varnish/default.vcl
+      - ./cache_server/varnish:/etc/default/varnish
+      - ./cache_server/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+    ports:
+      - "6081:6081"
+      - "6082:6082"
+    links:
+      - web_server
+
+  web_server:
+    build:
+      context: ./web_server/
+    container_name: apache2
+    volumes:
+      - ./magento2:/var/www/html  
+      - ./web_server/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./web_server/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+      - ./web_server/envvars:/etc/apache2/envvars
+    ports:
+      - "8080:8080"
+    links:
+      - database_server
+    
+  database_server:
+    build:
+      context: ./database_server/
+      args:
+        - mysql_password=rootpassword123
+    container_name: mysql
+    volumes: 
+      - ./database_server/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+      - ./database_server/mysql.sh:/etc/mysql.sh
+    ports:
+      - "3306:3306"

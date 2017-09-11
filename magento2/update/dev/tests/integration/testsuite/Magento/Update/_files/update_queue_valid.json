@@ -1,0 +1,54 @@
+{
+    "jobs": [
+        {
+            "name": "backup",
+            "params": {}
+        },
+        {
+            "name": "rollback",
+            "params": {
+                "backup_file_name": "/full/path/to/archive.zip"
+            }
+        },
+        {
+            "name": "remove_backups",
+            "params": {
+                "backups_file_names": [
+                    "/full/path/to/archive1.zip",
+                    "/full/path/to/archive2.zip"
+                ]
+            }
+        },
+        {
+            "name": "update",
+            "params": {
+                "components": [
+                    {
+                        "name": "packageName1",
+                        "version": "1.0.0"
+                    },
+                    {
+                        "name": "packageName2",
+                        "version": "2.0.0"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "uninstall",
+            "params": {
+                "components": [
+                    {
+                        "name": "packageName3",
+                        "version": "9.0.0"
+                    },
+                    {
+                        "name": "packageName4",
+                        "version": "7.0.0"
+                    }
+                ]
+            }
+        }
+    ],
+    "ignored_field": ""
+}

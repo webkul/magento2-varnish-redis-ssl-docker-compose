@@ -1,0 +1,18 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<ul class="dropdown-menu">
+    <?php foreach ($items as $item): ?>
+    <li id="<?php /* @escapeNotVerified */ echo $item['id'] ?>" class="item">
+        <a href="<?php /* @escapeNotVerified */ echo $item['url'] ?>" class="title"><?php echo $block->escapeHtml($item['name']) ?></a>
+        <div class="type"><?php /* @escapeNotVerified */ echo $item['type'] ?></div>
+        <?php echo $block->escapeHtml($item['description']) ?>
+    </li>
+    <?php endforeach ?>
+</ul>
