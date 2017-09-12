@@ -69,25 +69,27 @@ Then follow the following steps:
 
 > database_root_password=rootpassword123    ## Mention mysql root password.
 
-4). Build the docker image.
+4). Replace the IP address assigned to 'server_name' in ~/magento2-varnish-redis-ssl-docker-compose/ssl_server/default with your domain name or IP address.
+
+5). Build the docker image.
 
 > docker-compose build
 
-5). Check the built image as:
+6). Check the built image as:
 
 > docker images
 
-6). Run the containers from built image as:
+7). Run the containers from built image as:
 
 > docker-compose up -d
 
-7). Check the running docker containers by command:
+8). Check the running docker containers by command:
 
 > docker-compose ps
 
 > docker ps
 
-8). Your database credentials are mentioned in mysql.sh file. Database user password will be randomly generated. Database user password will be stored in /var/log/check.log. To get database user password,
+9). Your database credentials are mentioned in mysql.sh file. Database user password will be randomly generated. Database user password will be stored in /var/log/check.log. To get database user password,
 
 > docker exec -ti mysql bash
  
