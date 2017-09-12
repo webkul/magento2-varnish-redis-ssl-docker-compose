@@ -17,6 +17,10 @@ RUN apt-get update \
 
 && apt-get -y install redis-server \
 
+&& sed -i -e"s/^bind\s127.0.0.1/bind 0.0.0.0/" /etc/redis/redis.conf \
+
+&& chown -R redis:syslog /var/log/redis/ \
+
 ##install supervisor and setup supervisord.conf file
 
 && apt-get install -y supervisor \
