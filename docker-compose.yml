@@ -31,7 +31,6 @@ services:
       - cache_server
       - database_server
     volumes:
-      - ./redis_server/redis.conf:/etc/redis/redis.conf
       - ./redis_server/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
     links:
       - web_server
