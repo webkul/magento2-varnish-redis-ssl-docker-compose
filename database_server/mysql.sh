@@ -14,13 +14,14 @@ database_user_password=`date | md5sum | fold -w 12 | head -n 1`
 ## Database user password will be stored in /var/log/check.log ##
 ## Remove /var/log/check.log after retrieving password .       ##
 
-database_availability_check=`mysqlshow --user=root --password=$database_root_password | grep -ow $database_name`
+database_availability_check=none
 
-if [ "$database_availability_check" == "$database_name" ]; then
-exit 1
-else
+while [ "$database_availability_check" != "$database_name" ]; do
+database_availability_check=`mysqlshow --user=root --password=$database_root_password | grep -ow $database_name`
+mysql -u root -p$database_root_password -e "grant all on *.* to 'root'@'%' identified by '$database_root_password';"
 mysql -u root -p$database_root_password -e "create database $database_name;"
 mysql -u root -p$database_root_password -e "grant all on $database_name.* to '$database_user'@'%' identified by '$database_user_password';"
 echo "Your database user "$database_user" password for database "$database_name" is "$database_user_password"" > /var/log/check.log
-fi
+done
+
 
