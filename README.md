@@ -52,6 +52,7 @@ Then follow the following steps:
 
 1). Clone or download this repository as 
 
+
 > git clone https://github.com/webkul/magento2-varnish-redis-ssl-docker-compose.git.
 
 2) Set mysql root credentials and name of the database to be created in *database_server* block ~/magento2-varnish-redis-ssl-docker-compose/docker-compose.yml:
@@ -65,6 +66,8 @@ Then follow the following steps:
 > Go to https://magento.com/tech-resources/download? .
 
 4). Replace localhost in 'server_name' in ~/magento2-varnish-redis-ssl-docker-compose/ssl_server/default with your domain name or IP address.
+
+> Go to https://magento.com/tech-resources/download? .
 
 5). Build the docker image.
 
@@ -102,4 +105,7 @@ If you face any issues, kindly report back.
 #### GETTING SUPPORT
 
 If you have any issues, contact us at support@webkul.com or raise ticket at https://webkul.uvdesk.com/
+<<<<<<< HEAD
  
+=======
+>>>>>>> d248117a222b3fa7389ffa2d8b871f796c070739
