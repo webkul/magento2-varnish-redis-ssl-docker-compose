@@ -1,4 +1,4 @@
-#### Optimising Magento 2 with Varnish Cache, Redis and Nginx SSL termination on the Multi-container Architecture Using Docker-Compose tool.
+### Optimising Magento 2 with Varnish Cache, Redis and Nginx SSL termination on the Multi-container Architecture Using Docker-Compose tool.
 
 This repository corresponds to architecture setup as mentioned in blog https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/ .
 
@@ -30,46 +30,41 @@ Magento 2 works out of box with Varnish Cache and provides its own VCL file for 
 
 Nginx servers as reverse proxy server that receives traffic on port 80 and 443 and then proxy pass it to listening port of Varnish Cache server. It is done to deploy a way to direct both HTTP and HTTPS traffic to Varnish cache server which in turn, if needed, forward it apache2 server.
 
-
 In this project, we are using:
 
-> Operating system: Ubuntu 14.04
+> Operating system: Ubuntu 16.04
 
 > Web Server: Apache2
 
-> Database Server: Mysql-server-5.6
+> Database Server: Mysql-server-5.7
 
-> Cache Server: Varnish 3.0.
+> Cache Server: Varnish 4.1
+
+> PHP version: PHP-7.1
 
 > Redis server: Redis 
 
 > SSL server: Nginx 1.10.1
 
-> PHP version: PHP-7.0
-
-> Magento 2.1.6
-
-To begin with, please install docker and docker-compose on your ubuntu 14.04 server. 
+To begin with, please install docker and docker-compose on your ubuntu server. 
 
 Then follow the following steps:
 
 1). Clone or download this repository as 
 
-> git clone https://github.com/webkul/magento2-varnish-redis-ssl-docker-compose.git
+> git clone https://github.com/webkul/magento2-varnish-docker-compose.git
 
-2) Set/modify mysql root credentials. Go to ~/magento2-varnish-redis-ssl-docker-compose/docker-compose.yml and change mysql root password in database_server in:
+2) Set mysql root credentials and name of the database to be created in ~/magento2-varnish-docker-compose/docker-compose.yml.
 
-> mysql_password=rootpassword123
+> mysql_password=
 
-3). Modify change database name, database user and mysql root credentials in ~/magento2-varnish-redis-ssl-docker-compose/database_server/mysql.sh in:
+> mysql_database=
 
-> database_name=magento_db                  ## Mention database name
+3). Download Magento 2 version you wish to dockerize and upload it in directory magento2 in parallel docker-compose.yml.
 
-> database_user=magento_user                ## Mention database user
+> Go to https://magento.com/tech-resources/download? .
 
-> database_root_password=rootpassword123    ## Mention mysql root password.
-
-4). Replace the IP address assigned to 'server_name' in ~/magento2-varnish-redis-ssl-docker-compose/ssl_server/default with your domain name or IP address.
+4). Add value in 'server_name' in ~/magento2-varnish-redis-ssl-docker-compose/ssl_server/default with your domain name or IP address.
 
 5). Build the docker image.
 
@@ -89,15 +84,6 @@ Then follow the following steps:
 
 > docker ps
 
-9). Your database credentials are mentioned in mysql.sh file. Database user password will be randomly generated. Database user password will be stored in /var/log/check.log. To get database user password,
-
-> docker exec -ti mysql bash
- 
-> cat /var/log/check.log
- 
-or,
-
-> docker exec -i mysql cat /var/log/check.log
 
 Now, your server setup is all ready, now hit your domain name or IP to install Magento 2. Now to configure Varnish for Magento 2 and test its working, please refer to blog https://cloudkul.com/blog/magento-2-and-varnish-cache-integration-with-docker-compose/.
 
@@ -109,3 +95,8 @@ To configure Magento 2 for redis-server, please refer to blog https://cloudkul.c
 Although we had secured our application code keeping it on our host but database is as important as server code. So in order to keep their backup we schedule a shell script that will take backups of all the databases present in mysql-server container and keep them in archived from on our host. Shell script is present on ~/magento2-varnish-redis-ssl-docker-compose/backups/db_backup.sh. Please refer to blog https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/  for backup management.
 
 If you face any issues, kindly report back.
+
+
+#### GETTING SUPPORT
+
+If you have any issues, contact us at support@webkul.com or raise ticket at https://webkul.uvdesk.com/
