@@ -67,8 +67,6 @@ Then follow the following steps:
 
 4). Replace localhost in 'server_name' in ~/magento2-varnish-redis-ssl-docker-compose/ssl_server/default with your domain name or IP address.
 
-> Go to https://magento.com/tech-resources/download? .
-
 5). Build the docker image.
 
 > docker-compose build
@@ -90,7 +88,7 @@ Then follow the following steps:
 
 Now, your server setup is all ready, now hit your domain name or IP to install Magento 2. Now to configure Varnish for Magento 2 and test its working, please refer to blog https://cloudkul.com/blog/magento-2-and-varnish-cache-integration-with-docker-compose/.
 
-> Use Database host as mysql (name or id of the mysql container).
+> Use name or id of the mysql container as database host.
 
 To configure Magento 2 for redis-server, please refer to blog https://cloudkul.com/blog/integrate-magento-2-varnish-cache-redis-server-ssl-termination-using-docker-compose/ .
 
@@ -105,7 +103,4 @@ If you face any issues, kindly report back.
 #### GETTING SUPPORT
 
 If you have any issues, contact us at support@webkul.com or raise ticket at https://webkul.uvdesk.com/
-<<<<<<< HEAD
- 
-=======
->>>>>>> d248117a222b3fa7389ffa2d8b871f796c070739
+
