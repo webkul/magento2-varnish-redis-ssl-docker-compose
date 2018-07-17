@@ -1,14 +1,18 @@
 server {
    listen 80 default_server;
   add_header 'Access-Control-Allow-Origin' '*';
-    server_name 192.168.18.5;  ## Or mention IP address or domain name                      
-    return 302 https://$server_name$request_uri;    
+    server_name localhost; ## mention ip address or domain name                      
+#    return 302 https://$server_name$request_uri;
+ 
+   location / {
+    include /etc/nginx/proxy_params;
+    proxy_pass http://varnish:6081;    
     }
-
+}
 server {
  listen 443;
   add_header 'Access-Control-Allow-Origin' '*';
- server_name 192.168.18.5; ## Or mention IP address or domain name
+  server_name localhost; ## mention ip address or domain name
         ssl on;
         ssl_certificate /etc/nginx/cert.crt;
         ssl_certificate_key /etc/nginx/cert.key;

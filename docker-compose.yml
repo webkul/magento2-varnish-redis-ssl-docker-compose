@@ -34,6 +34,8 @@ services:
       - ./redis_server/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
     links:
       - web_server
+      - database_server
+
     ports:
       - "6379:6379"
 
@@ -52,6 +54,8 @@ services:
       - "6082:6082"
     links:
       - web_server
+      - database_server
+
 
   web_server:
     build:
@@ -59,9 +63,7 @@ services:
     container_name: apache2
     volumes:
       - ./magento2:/var/www/html  
-      - ./web_server/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
       - ./web_server/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
-      - ./web_server/envvars:/etc/apache2/envvars
     ports:
       - "8080:8080"
     links:
@@ -71,7 +73,8 @@ services:
     build:
       context: ./database_server/
       args:
-        - mysql_password=rootpassword123
+        - mysql_password=mention_your_mysql_root_password
+        - mysql_database=mention_your_database_name
     container_name: mysql
     volumes: 
       - ./database_server/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
